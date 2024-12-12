@@ -1,0 +1,8 @@
+{% load allauth %}
+<strong 
+    {% if attrs.tags %}data-tags="{{ attrs.tags }}"{% endif %}
+    {% if attrs.title %}title="{{ attrs.title }}"{% endif %}
+    {% if attrs.class %}class="{{ attrs.class }}"{% endif %}>
+        {% slot %}
+        {% endslot %}
+</strong>

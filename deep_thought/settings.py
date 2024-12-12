@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # ===== Third party apps ======
-    # Allauth
     "allauth",
     "allauth.account",
+    "django_browser_reload",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # ===== Local apps ========
     "apps.users",
 ]
@@ -64,7 +66,7 @@ ROOT_URLCONF = "deep_thought.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -133,7 +135,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ========================================================================================
-# Allauth settings
+# Allauth/AUTH settings
 # ========================================================================================
 # https://docs.allauth.org/en/latest/installation/quickstart.html
 AUTHENTICATION_BACKENDS = [
@@ -142,3 +144,16 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
+
+LOGIN_REDIRECT_URL = "/"
+
+# ==========================================================================================
+# Email settings
+# ==========================================================================================
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# ==========================================================================================
+# Crispy forms settings
+# ==========================================================================================
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
