@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     # ===== Third party apps ======
     "allauth",
     "allauth.account",
-    "django_browser_reload",
     "crispy_forms",
     "crispy_bootstrap5",
     # ===== Local apps ========
@@ -133,6 +132,27 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ========================================================================================
+# Debug Settings
+# ========================================================================================
+if DEBUG:
+    INSTALLED_APPS += [
+        "django_browser_reload",
+        "debug_toolbar",
+    ]
+
+    MIDDLEWARE += [
+        # ============= Browser reload ==============
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+
+    INTERNAL_IPS = [
+        # ...
+        "127.0.0.1",
+        # ...
+    ]
 
 # ========================================================================================
 # Allauth/AUTH settings
