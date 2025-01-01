@@ -8,6 +8,8 @@ django = "*"
 django-allauth = "*"
 django-environ = "*"
 crispy-bootstrap5 = "*"
+requests = "*"
+python-dateutil = "*"
 
 [dev-packages]
 ruff = "*"
