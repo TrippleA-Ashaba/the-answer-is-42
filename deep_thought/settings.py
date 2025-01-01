@@ -74,6 +74,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # ============= Blog context processor ==============
+                "apps.blog.context_processors.current_year",
             ],
         },
     },
@@ -180,3 +182,23 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # ==========================================================================================
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# ==========================================================================================
+# Blog settings
+# ==========================================================================================
+BLOG_BASE_URL = env.str(
+    "BLOG_BASE_URL",
+    default="https://medium.com/feed/@albertashaba.a",
+)
+RSS_TO_JSON_URL = env.str(
+    "RSS_TO_JSON_URL",
+    default="https://api.rss2json.com/v1/api.json",
+)
+RSS_TO_JSON_API_KEY = env.str(
+    "RSS_TO_JSON_API_KEY",
+    default="",
+)
+RSS_FEED_PULL_TIMEOUT = env.int(
+    "RSS_PULL_TIMEOUT",
+    default=5,
+)
