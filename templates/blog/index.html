@@ -6,11 +6,16 @@
 <table class="table table-borderless table-light">
 	<tbody>
 		{% for post in posts %}
-		<tr>
+		<tr class="">
 			<td class="text-nowrap">{{ post.pubDate|date:"d M Y" }}</td>
 			<td></td>
 			<td>
-				<a class="fw-semibold" href="{{ post.link }}" target="_blank"> {{ post.title }} </a>
+				<a
+					class="fw-semibold link-offset-3 link-dark link-underline-primary link-underline-opacity-50"
+					href="{{ post.link }}"
+					target="_blank">
+					{{ post.title }}
+				</a>
 			</td>
 		</tr>
 		{% empty %}
