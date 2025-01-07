@@ -7,9 +7,15 @@ name = "pypi"
 django = "*"
 django-allauth = "*"
 django-environ = "*"
+crispy-bootstrap5 = "*"
+requests = "*"
+python-dateutil = "*"
+whitenoise = "*"
 
 [dev-packages]
 ruff = "*"
+django-browser-reload = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.12"

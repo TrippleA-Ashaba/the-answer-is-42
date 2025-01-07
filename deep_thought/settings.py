@@ -40,15 +40,18 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # ===== Third party apps ======
-    # Allauth
     "allauth",
     "allauth.account",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # ===== Local apps ========
     "apps.users",
+    "apps.blog",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -64,7 +67,7 @@ ROOT_URLCONF = "deep_thought.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -72,6 +75,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # ============= Blog context processor ==============
+                "apps.blog.context_processors.current_year",
             ],
         },
     },
@@ -126,6 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -133,7 +140,28 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ========================================================================================
-# Allauth settings
+# Debug Settings
+# ========================================================================================
+if DEBUG:
+    INSTALLED_APPS += [
+        "django_browser_reload",
+        "debug_toolbar",
+    ]
+
+    MIDDLEWARE += [
+        # ============= Browser reload ==============
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+
+    INTERNAL_IPS = [
+        # ...
+        "127.0.0.1",
+        # ...
+    ]
+
+# ========================================================================================
+# Allauth/AUTH settings
 # ========================================================================================
 # https://docs.allauth.org/en/latest/installation/quickstart.html
 AUTHENTICATION_BACKENDS = [
@@ -142,3 +170,36 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
+
+LOGIN_REDIRECT_URL = "/"
+
+# ==========================================================================================
+# Email settings
+# ==========================================================================================
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# ==========================================================================================
+# Crispy forms settings
+# ==========================================================================================
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# ==========================================================================================
+# Blog settings
+# ==========================================================================================
+BLOG_BASE_URL = env.str(
+    "BLOG_BASE_URL",
+    default="https://medium.com/feed/@albertashaba.a",
+)
+RSS_TO_JSON_URL = env.str(
+    "RSS_TO_JSON_URL",
+    default="https://api.rss2json.com/v1/api.json",
+)
+RSS_TO_JSON_API_KEY = env.str(
+    "RSS_TO_JSON_API_KEY",
+    default="",
+)
+RSS_FEED_PULL_TIMEOUT = env.int(
+    "RSS_PULL_TIMEOUT",
+    default=5,
+)

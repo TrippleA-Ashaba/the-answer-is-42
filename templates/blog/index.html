@@ -1,0 +1,29 @@
+{% extends 'bases/base.html' %}
+<!--  -->
+{% block content %}
+
+<h1 class="fw-bold mb-4">Blog</h1>
+<table class="table table-borderless table-light">
+	<tbody>
+		{% for post in posts %}
+		<tr class="">
+			<td class="text-nowrap">{{ post.pubDate|date:"d M Y" }}</td>
+			<td></td>
+			<td>
+				<a
+					class="fw-semibold link-offset-3 link-dark link-underline-warning link-underline-opacity-50"
+					href="{{ post.link }}"
+					target="_blank">
+					{{ post.title }}
+				</a>
+			</td>
+		</tr>
+		{% empty %}
+		<tr>
+			<td class="text-danger-emphasis text-center">{{ error }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock content %}
