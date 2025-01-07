@@ -10,6 +10,7 @@ django-environ = "*"
 crispy-bootstrap5 = "*"
 requests = "*"
 python-dateutil = "*"
+whitenoise = "*"
 
 [dev-packages]
 ruff = "*"
