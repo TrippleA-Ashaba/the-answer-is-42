@@ -36,7 +36,7 @@ ENV PIPENV_VENV_IN_PROJECT=1
 ENV PIPENV_SYSTEM=1
 
 # Install dependencies
-RUN pipenv install --deploy --ignore-pipfile
+RUN pipenv install --ignore-pipfile
 
 # Expose the port the app runs on
 EXPOSE 8000
@@ -55,3 +55,6 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 # Stop the Docker container
 # sudo docker stop <container_id>
+
+# Run container with terminal access
+# docker exec -it image_name sh

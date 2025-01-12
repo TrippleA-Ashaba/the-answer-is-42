@@ -11,6 +11,7 @@ crispy-bootstrap5 = "*"
 requests = "*"
 python-dateutil = "*"
 whitenoise = "*"
+psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 ruff = "*"
