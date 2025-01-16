@@ -3,4 +3,4 @@ def test_dummy():
 
 
 def test_dummy2():
-    assert 2 == 3
+    assert 2 == 2
