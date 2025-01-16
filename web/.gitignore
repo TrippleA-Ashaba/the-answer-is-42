@@ -4,3 +4,4 @@ venv
 .env
 docker.env
 staticfiles
+__pycache__
