@@ -1,0 +1,61 @@
+services:
+    django1:
+        restart: on-failure
+        build: ./web
+        hostname: django1
+        volumes:
+            - ./web:/app
+        ports:
+            - "81:8000"
+        depends_on:
+            db:
+                condition: service_healthy
+        env_file:
+            - ./web/docker.env
+        command: >
+            sh -c "python manage.py collectstatic --noinput &&
+                   python manage.py runserver 0.0.0.0:8000"
+
+    django2: # Add a second Django service for load balancing
+        restart: on-failure
+        build: ./web
+        hostname: django2
+        volumes:
+            - ./web:/app
+        ports:
+            - "82:8000"
+        depends_on:
+            db:
+                condition: service_healthy
+        env_file:
+            - ./web/docker.env
+        command: >
+            sh -c "python manage.py collectstatic --noinput &&
+                   python manage.py runserver"
+    nginx:
+        restart: on-failure
+        build: ./nginx
+        ports:
+            - "80:80"
+        depends_on:
+            - django1
+            - django2
+    db:
+        image: postgres:16
+        ports:
+            - 5432
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        healthcheck: # Add health check for PostgreSQL
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s # Check every 10 seconds
+            timeout: 5s # Timeout after 5 seconds
+            retries: 5 # Retry up to 5 times before marking unhealthy
+        env_file:
+            - ./web/docker.env
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+volumes:
+    db_data:

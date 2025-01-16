@@ -1,0 +1,7 @@
+db.sqlite3
+.venv
+venv
+.env
+docker.env
+staticfiles
+__pycache__
